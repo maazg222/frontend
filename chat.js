@@ -133,9 +133,13 @@ function updateStatusUI(status, count) {
     }
 
     if (statusDot) {
-        if (status === 'connected' || count !== undefined) statusDot.style.background = '#22c55e';
-        else if (status === 'Disconnected' || status === 'Reconnecting...') statusDot.style.background = '#ff4d4d';
-        else statusDot.style.background = '#666';
+        if (status === 'connected' || count !== undefined) {
+            statusDot.style.background = '#22c55e'; // Green for Online
+        } else if (status === 'Server Offline' || status === 'Disconnected' || status === 'Reconnecting...') {
+            statusDot.style.background = '#ff4d4d'; // Red for Error
+        } else {
+            statusDot.style.background = '#666'; // Gray for Idle/Connecting
+        }
     }
 }
 
@@ -184,11 +188,15 @@ async function fetchMessages() {
         if (!response.ok) throw new Error('Failed to fetch messages');
         const messages = await response.json();
         renderMessages(messages);
+        
+        // If we successfully fetched messages, the server is definitely not offline
+        updateStatusUI('connected');
     } catch (error) {
         console.error('Error fetching messages:', error);
         if (chatMessages) {
             chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.5; margin-top: 2rem; color: #ff4d4d;"><i class="fas fa-exclamation-triangle"></i> Failed to load messages. <br> <span style="font-size: 0.8rem; opacity: 0.6;">Server might be offline.</span></div>';
         }
+        updateStatusUI('Server Offline');
     }
 }
 
