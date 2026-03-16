@@ -14,6 +14,33 @@ const typingIndicator = document.getElementById('typing-indicator');
 const userCountText = document.getElementById('user-count-text');
 const statusDot = document.getElementById('status-dot');
 
+// Mobile Sidebar Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const sidebar = document.querySelector('.sidebar');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+if (menuToggle && sidebar && sidebarOverlay) {
+    menuToggle.onclick = () => {
+        sidebar.classList.add('active');
+        sidebarOverlay.classList.add('active');
+    };
+
+    sidebarOverlay.onclick = () => {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+    };
+    
+    // Close sidebar when clicking a nav item on mobile
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            }
+        });
+    });
+}
+
 // Reply System Elements
 const replyPreviewBar = document.getElementById('reply-preview-bar');
 const replyUser = document.getElementById('reply-user');
@@ -142,17 +169,39 @@ socket.on('connect_error', (err) => {
 });
 
 socket.on('load_messages', (messages) => {
+    renderMessages(messages);
+});
+
+async function fetchMessages() {
+    try {
+        const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/messages`);
+        if (!response.ok) throw new Error('Failed to fetch messages');
+        const messages = await response.json();
+        renderMessages(messages);
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        // Socket might still load messages later
+    }
+}
+
+function renderMessages(messages) {
+    if (!chatMessages) return;
+    
+    // Use saved user if not yet initialized
+    const currentLoggedUser = user || (localStorage.getItem('agency_chat_user') ? JSON.parse(localStorage.getItem('agency_chat_user')) : null);
+    
     chatMessages.innerHTML = '';
     if (Array.isArray(messages)) {
         if (messages.length === 0) {
             chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.3; margin-top: 2rem;">No messages yet. Say hello!</div>';
         } else {
             messages.forEach(msg => {
-                appendMessage(msg, user && msg.userId === user.id);
+                appendMessage(msg, currentLoggedUser && msg.userId === currentLoggedUser.id);
             });
+            scrollToBottom();
         }
     }
-});
+}
 
 async function deleteMessage(messageId) {
     if (!user || !messageId) return;
@@ -348,6 +397,9 @@ function checkLogin() {
     if (savedUser) {
         login(JSON.parse(savedUser));
     }
+    
+    // Always fetch messages on load
+    fetchMessages();
 }
 
 // Check for existing session
@@ -673,7 +725,7 @@ function cancelReply() {
 cancelReplyBtn.onclick = cancelReply;
 
 // Send Message
-function sendMessage() {
+async function sendMessage() {
     const text = chatInput.value.trim();
     if (!text || !user) return;
     if (user.banned) {
@@ -689,12 +741,40 @@ function sendMessage() {
         userAvatar: user.avatar,
         userId: user.id,
         rank: user.rank || 'member',
-        replyTo: currentReplyTo // Add reply data
+        replyTo: currentReplyTo
     };
 
-    socket.emit('send_message', messageData);
+    // Optimistically clear input and reply
+    const oldInput = chatInput.value;
     chatInput.value = '';
-    cancelReply(); // Reset reply after sending
+    const oldReply = currentReplyTo;
+    cancelReply();
+
+    try {
+        const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(messageData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to send message');
+        }
+        
+        // Message sent successfully. The socket will broadcast it back to us.
+    } catch (err) {
+        console.error('Send message error:', err);
+        showToast(err.message || 'Error sending message', 'error');
+        // Restore input if failed
+        chatInput.value = oldInput;
+        currentReplyTo = oldReply;
+        if (currentReplyTo) {
+            replyUser.innerText = `Replying to ${currentReplyTo.userName}`;
+            replyText.innerText = currentReplyTo.text;
+            replyPreviewBar.classList.add('active');
+        }
+    }
 }
 
 sendBtn.addEventListener('click', sendMessage);
@@ -715,7 +795,8 @@ chatInput.addEventListener('input', () => {
 
 // Receive Messages
 socket.on('receive_message', (msg) => {
-    appendMessage(msg, msg.userId === user?.id);
+    const currentLoggedUser = user || (localStorage.getItem('agency_chat_user') ? JSON.parse(localStorage.getItem('agency_chat_user')) : null);
+    appendMessage(msg, msg.userId === currentLoggedUser?.id);
 });
 
 socket.on('user_typing', (data) => {
