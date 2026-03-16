@@ -9,6 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="clean-urls.js" defer></script>
+    <style>
+        @media (max-width: 768px) {
+            section[style*="padding-top:140px"] { padding-top: 100px !important; padding-bottom: 40px !important; }
+            .config-card { padding: 1.5rem !important; }
+            .config-card div[style*="display:flex"] { flex-direction: column; align-items: flex-start !important; gap: 10px !important; }
+            .config-card h1 { font-size: 1.8rem !important; }
+            .config-card div[style*="background: var(--accent-red)"] { width: 100%; text-align: center; }
+            
+            .config-card div[style*="display:grid"] { grid-template-columns: 1fr !important; }
+            
+            .pricing-container { grid-template-columns: 1fr !important; gap: 1rem !important; }
+            
+            section[style*="padding-bottom:100px"] { padding-bottom: 60px !important; }
+            
+            .btn { width: 100%; text-align: center; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
     <div class="mesh-bg"></div>

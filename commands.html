@@ -338,6 +338,49 @@
             color: var(--text-muted);
             font-size: 0.9rem;
         }
+
+        @media (max-width: 768px) {
+            .cmd-hero { padding-top: 100px; padding-bottom: 30px; }
+            .cmd-hero h1 { font-size: 2.2rem; }
+            .cmd-hero p { font-size: 0.9rem; padding: 0 1rem; }
+            
+            .cmd-container { 
+                grid-template-columns: 1fr; 
+                padding: 20px 15px;
+                gap: 1.5rem;
+            }
+
+            .cmd-sidebar {
+                position: static;
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            .bot-selector {
+                margin-bottom: 1.5rem;
+            }
+
+            .category-list {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                scrollbar-width: none; /* Firefox */
+            }
+            .category-list::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+            .category-item {
+                white-space: nowrap;
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .cmd-header h1 { font-size: 1.8rem !important; }
+            .cmd-grid { grid-template-columns: 1fr; }
+            
+            .cmd-card { padding: 1rem; }
+            .cmd-usage { max-width: 60%; font-size: 0.7rem; }
+            .cmd-perm { font-size: 0.65rem; }
+        }
     </style>
 </head>
 <body>
@@ -357,8 +400,20 @@
             <div class="nav-btns">
                 <a href="dashboard" class="btn btn-primary">Dashboard</a>
             </div>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
+
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
+        }
+    </script>
 
     <header class="cmd-hero animate__animated animate__fadeInDown">
         <div class="container">

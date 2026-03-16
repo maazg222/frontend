@@ -450,6 +450,93 @@
             .sidebar-logo, .menu-item span, .menu-label { display: none; }
             .sidebar-header { justify-content: center; padding: 1.2rem 0; }
         }
+
+        @media (max-width: 768px) {
+            :root {
+                --sidebar-width: 0px;
+                --sidebar-collapsed-width: 0px;
+            }
+
+            .dashboard-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100% !important;
+                height: 60px;
+                flex-direction: row;
+                border-right: none;
+                border-top: 1px solid var(--glass-border);
+                padding: 0;
+                background: rgba(8, 8, 8, 0.98);
+            }
+
+            .sidebar-header, .menu-label, .sidebar-footer { display: none !important; }
+
+            .sidebar-menu {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding: 0;
+                width: 100%;
+                overflow: visible;
+            }
+
+            .menu-item {
+                margin: 0;
+                padding: 10px;
+                background: none;
+                border: none;
+                flex-direction: column;
+                gap: 4px;
+                font-size: 0.7rem;
+            }
+
+            .menu-item i { font-size: 1.2rem; }
+            .menu-item span { display: block !important; }
+            .menu-item.active::before { display: none; }
+            .menu-item.active { background: none; border: none; color: var(--accent-red); box-shadow: none; }
+
+            .main-stage {
+                padding: 1rem;
+                padding-bottom: 80px; /* Space for bottom nav */
+                height: 100vh;
+                width: 100vw;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .user-profile-nav {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .config-card { padding: 1rem; }
+            .control-group { grid-template-columns: 1fr; }
+            
+            .card-title { font-size: 1rem; }
+            .empty-state { padding: 1.5rem; }
+            .empty-title { font-size: 1.2rem; }
+            
+            #tab-moderation .control-group {
+                grid-template-columns: 1fr !important;
+            }
+
+            #active-guild-name { font-size: 1.4rem !important; }
+        }
+
+        @media (max-width: 480px) {
+            .menu-item span { font-size: 0.6rem; }
+            .top-bar h1 { font-size: 1.4rem !important; }
+        }
         .stat-label{font-size:.8rem;color:var(--text-gray)}
         .stat-value{font-size:1.1rem;font-weight:800}
     </style>

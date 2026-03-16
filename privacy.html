@@ -96,6 +96,20 @@
             background: var(--glass-border);
             margin: 2rem 0;
         }
+        @media (max-width: 768px) {
+            .policy-hero { padding-top: 100px; padding-bottom: 30px; }
+            .policy-hero h1 { font-size: 2.2rem; }
+            .policy-hero p { font-size: 0.9rem; }
+            
+            .policy { padding: 1.5rem; border-radius: 20px; margin-bottom: 40px; }
+            .policy .toc { grid-template-columns: 1fr; gap: 0.5rem; }
+            .policy h2 { font-size: 1.3rem; }
+            .policy h3 { font-size: 1rem; }
+            .policy p, .policy li { font-size: 0.9rem; }
+            
+            footer .container { flex-direction: column; gap: 2rem; text-align: center; }
+            footer .container div { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+        }
         @media (max-width: 600px) {
             .policy { padding: 1.25rem; border-radius: 20px; }
         }
@@ -119,8 +133,20 @@
             <div class="nav-btns">
                 <a href="invite-hitman" class="btn btn-primary">Dashboard</a>
             </div>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
+
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
+        }
+    </script>
 
     <header class="policy-hero">
         <div class="container">
