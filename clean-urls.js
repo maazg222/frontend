@@ -22,7 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
   try {
     var CKEY = 'cookie_consent';
     function getConsent() {
-      try { return JSON.parse(localStorage.getItem(CKEY) || ''); } catch(e) { return null; }
+      try {
+        var val = localStorage.getItem(CKEY);
+        return val ? JSON.parse(val) : null;
+      } catch(e) { return null; }
     }
     function setConsent(obj) {
       try { localStorage.setItem(CKEY, JSON.stringify(obj)); } catch(e){}

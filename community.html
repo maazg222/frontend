@@ -408,7 +408,7 @@
                             <i class="fab fa-discord" style="font-size: 2rem; color: #5865F2; margin: 0;"></i>
                         </div>
                         <div class="server-info">
-                            <h4><span>/</span>FIA <img src="https://cdn.discordapp.com/emojis/1054321300094054400.webp?size=44&quality=lossless" alt="booster" class="booster-badge"></h4>
+                            <h4><span>/</span>FIA <i class="fas fa-gem" style="color: #ff3333; font-size: 0.9rem;"></i></h4>
                             <div class="member-counts">
                                 <div class="count-item">
                                     <div class="dot online"></div>
@@ -521,6 +521,11 @@
                     const iconImg = document.getElementById('server-icon');
                     const placeholder = document.getElementById('server-icon-placeholder');
                     
+                    iconImg.onerror = () => {
+                        iconImg.style.display = 'none';
+                        placeholder.style.display = 'flex';
+                    };
+
                     iconImg.src = iconUrl;
                     iconImg.style.display = 'block';
                     placeholder.style.display = 'none';
