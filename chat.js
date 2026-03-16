@@ -421,6 +421,22 @@ function checkLogin() {
 // Check for existing session
 checkLogin();
 
+// Background polling as a fallback for live messages (every 10 seconds)
+setInterval(async () => {
+    try {
+        const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/messages`);
+        if (response.ok) {
+            const messages = await response.json();
+            // Only re-render if we have new messages to avoid flickering
+            const currentCount = chatMessages.querySelectorAll('.message').length;
+            if (messages.length > currentCount) {
+                renderMessages(messages);
+                updateStatusUI('connected');
+            }
+        }
+    } catch (e) {}
+}, 10000);
+
 async function refreshUserProfile(id) {
     try {
         const res = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/user/${encodeURIComponent(id)}`);
@@ -765,6 +781,12 @@ async function sendMessage() {
     chatInput.value = '';
     const oldReply = currentReplyTo;
     cancelReply();
+    
+    // Optimistically append the message to the sender's UI
+    // We'll give it a temporary ID to avoid duplication if needed
+    const tempId = 'temp-' + Date.now();
+    const optimisticMsg = { ...messageData, id: tempId, timestamp: new Date().toISOString() };
+    appendMessage(optimisticMsg, true);
 
     try {
         const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/send`, {
@@ -811,6 +833,26 @@ chatInput.addEventListener('input', () => {
 
 // Receive Messages
 socket.on('receive_message', (msg) => {
+    // If this message is already on the screen (optimistic update), skip it
+    const existing = document.querySelector(`[data-message-id="${msg.id}"]`);
+    if (existing) return;
+    
+    // Check if it's our own message that was just sent optimistically (by matching text and userId)
+    // We can also check for temporary IDs if we want to be more precise
+    const tempMsgs = document.querySelectorAll('[data-message-id^="temp-"]');
+    for (const tempMsg of tempMsgs) {
+        const textElem = tempMsg.querySelector('.message-text');
+        if (textElem && textElem.innerText === msg.text && tempMsg.querySelector('.user-name').getAttribute('data-user-id') === msg.userId) {
+            // Update the temporary message with the real ID and timestamp from server
+            tempMsg.setAttribute('data-message-id', msg.id);
+            const timeElem = tempMsg.querySelector('.time-text');
+            if (timeElem && msg.timestamp) {
+                timeElem.innerText = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+            return;
+        }
+    }
+
     const currentLoggedUser = user || (localStorage.getItem('agency_chat_user') ? JSON.parse(localStorage.getItem('agency_chat_user')) : null);
     appendMessage(msg, msg.userId === currentLoggedUser?.id);
 });

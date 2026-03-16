@@ -1,9 +1,7 @@
 // Central configuration for the frontend
 const CONFIG = {
     // Determine the Backend URL based on the current environment
-    BACKEND_URL: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:5000'
-        : 'https://backend-nine-tau-82.vercel.app', // Correct backend URL
+    BACKEND_URL: 'https://nonjuristic-audria-uncapturable.ngrok-free.dev', // Active ngrok backend
 
     // Add other environment-specific settings here
     DISCORD_CLIENT_ID: '1405503287129804883'
