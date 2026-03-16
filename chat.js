@@ -143,8 +143,10 @@ function updateStatusUI(status, count) {
 socket.on('connect', () => {
     console.log('Connected to chat server');
     updateStatusUI('connected');
-    // Show loading state for messages
-    chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.3; margin-top: 2rem;">Loading messages...</div>';
+    // If messages area is still empty or showing an error, try fetching again
+    if (!chatMessages.querySelector('.message')) {
+        fetchMessages();
+    }
 });
 
 socket.on('message_deleted', (messageId) => {
@@ -173,6 +175,10 @@ socket.on('load_messages', (messages) => {
 });
 
 async function fetchMessages() {
+    if (chatMessages) {
+        chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.3; margin-top: 2rem;"><i class="fas fa-spinner fa-spin"></i> Loading chat...</div>';
+    }
+    
     try {
         const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/messages`);
         if (!response.ok) throw new Error('Failed to fetch messages');
@@ -180,7 +186,9 @@ async function fetchMessages() {
         renderMessages(messages);
     } catch (error) {
         console.error('Error fetching messages:', error);
-        // Socket might still load messages later
+        if (chatMessages) {
+            chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.5; margin-top: 2rem; color: #ff4d4d;"><i class="fas fa-exclamation-triangle"></i> Failed to load messages. <br> <span style="font-size: 0.8rem; opacity: 0.6;">Server might be offline.</span></div>';
+        }
     }
 }
 
