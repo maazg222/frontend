@@ -164,7 +164,7 @@ async function deleteMessage(messageId) {
         confirmColor: '#ff4d4d',
         onConfirm: async () => {
             try {
-                const response = await fetch('/api/auth/delete-message', {
+                const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/delete-message`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -199,7 +199,7 @@ const emojiMap = {
 
 // Discord Login Redirect
 discordLoginBtn.addEventListener('click', () => {
-    window.location.href = '/api/auth/discord';
+    window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord`;
 });
 
 function login(userData) {
@@ -355,7 +355,7 @@ checkLogin();
 
 async function refreshUserProfile(id) {
     try {
-        const res = await fetch(`/api/auth/user/${encodeURIComponent(id)}`);
+        const res = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/user/${encodeURIComponent(id)}`);
         if (!res.ok) return;
         const latest = await res.json();
         if (!latest || !latest.id) return;
@@ -373,7 +373,7 @@ async function refreshUserProfile(id) {
 
 async function checkBanStatus(id) {
     try {
-        const res = await fetch(`/api/auth/ban-status/${encodeURIComponent(id)}`);
+        const res = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/ban-status/${encodeURIComponent(id)}`);
         if (!res.ok) return;
         const data = await res.json();
         if (data && data.banned) {
@@ -445,7 +445,7 @@ newSaveUserRankBtn.addEventListener('click', async () => {
     const newRank = assignRankSelect.value;
     
     try {
-        const response = await fetch('/api/auth/update-rank', {
+        const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/update-rank`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -529,7 +529,7 @@ saveProfileBtn.addEventListener('click', async () => {
     if (!newName) return;
 
     try {
-        const response = await fetch('/api/auth/update-profile', {
+        const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/update-profile`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -571,7 +571,7 @@ if (banUserBtn) {
             confirmColor: '#ff4d4d',
             onConfirm: async () => {
                 try {
-                    const response = await fetch('/api/auth/ban-user', {
+                    const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/ban-user`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -604,7 +604,7 @@ if (unbanUserBtn) {
             confirmColor: '#10b981',
             onConfirm: async () => {
                 try {
-                    const response = await fetch('/api/auth/unban-user', {
+                    const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/unban-user`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

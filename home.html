@@ -25,7 +25,7 @@
                 <a href="community">Community</a>
             </div>
             <div class="nav-btns" id="nav-auth-btns">
-                <a href="/api/auth/discord" class="btn btn-primary">Login with Discord</a>
+                <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord`" class="btn btn-primary">Login with Discord</a>
             </div>
         </div>
     </nav>
@@ -77,7 +77,7 @@
                 `;
             } else {
                 navBtns.innerHTML = `
-                    <a href="/api/auth/discord?state=dashboard" class="btn btn-primary">Login with Discord</a>
+                    <a href="#" onclick="window.location.href = \`\${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary">Login with Discord</a>
                 `;
             }
         }
@@ -96,7 +96,7 @@
                 <h1>Agency Development.</h1>
                  <p>Antinuke Protection. Secure Infrastructure. Optimized Global Performance Reliability without compromise. </p>
                 <div class="hero-btns">
-                    <a href="/api/auth/discord?state=dashboard" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1rem;">MANAGE SERVER</a>
+                    <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard`" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 1rem;">MANAGE SERVER</a>
                     <a href="community.html" class="btn btn-outline" style="padding: 1rem 2.5rem; font-size: 1rem;">View Community</a>
                 </div>
             </div>
