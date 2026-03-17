@@ -215,7 +215,40 @@
             transform: translateY(0);
         }
 
+        @media (max-width: 768px) {
+            .premium-hero { padding-top: 110px !important; padding-bottom: 30px !important; }
+            .premium-hero h1 { font-size: 2.5rem !important; line-height: 1.1; letter-spacing: -1.5px !important; }
+            .premium-hero p { font-size: 0.95rem !important; margin-bottom: 2rem !important; padding: 0 10px; }
 
+            .pricing-container { 
+                grid-template-columns: 1fr !important; 
+                gap: 1.5rem !important; 
+                padding-bottom: 60px !important;
+                max-width: 100% !important;
+            }
+            .pricing-card { 
+                padding: 2rem 1.5rem !important; 
+                border-radius: 24px !important; 
+                animation: none !important; /* Disable animations on mobile for better performance */
+            }
+            .pricing-card.popular { 
+                transform: none !important; 
+                margin: 0 !important; 
+                border-width: 1.5px !important;
+            }
+            .pricing-card:hover { transform: none !important; }
+            
+            .card-icon { font-size: 1.8rem !important; margin-bottom: 1.2rem !important; }
+            .plan-name { font-size: 1.25rem !important; }
+            .plan-price { font-size: 2.2rem !important; margin-bottom: 1.5rem !important; }
+            .plan-price span { font-size: 0.85rem !important; }
+            
+            .features-list { margin-bottom: 2rem !important; }
+            .features-list li { font-size: 0.85rem !important; gap: 10px !important; margin-bottom: 0.8rem !important; }
+            
+            .buy-btn { padding: 0.85rem !important; font-size: 0.9rem !important; border-radius: 12px !important; }
+            .badge { top: 15px !important; right: 15px !important; padding: 4px 10px !important; font-size: 0.65rem !important; }
+        }
     </style>
 </head>
 <body>

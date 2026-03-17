@@ -340,67 +340,80 @@
         }
 
         @media (max-width: 768px) {
-            .cmd-hero { padding-top: 100px; padding-bottom: 30px; }
-            .cmd-hero h1 { font-size: 2.2rem; }
-            .cmd-hero p { font-size: 0.9rem; padding: 0 1rem; }
+            .cmd-hero { padding-top: 110px; padding-bottom: 25px; }
+            .cmd-hero h1 { font-size: 2.2rem; line-height: 1.1; margin-bottom: 0.8rem; }
+            .cmd-hero p { font-size: 0.85rem; padding: 0 1rem; line-height: 1.5; opacity: 0.8; }
             
             .cmd-container { 
                 grid-template-columns: 1fr; 
-                padding: 20px 15px;
-                gap: 1.5rem;
+                padding: 10px 12px;
+                gap: 1rem;
             }
 
             .cmd-sidebar {
                 position: static;
                 padding: 1rem;
-                border-radius: 12px;
+                border-radius: 16px;
+                background: rgba(255, 255, 255, 0.03);
             }
 
             .bot-selector {
-                margin-bottom: 1.5rem;
-                height: 44px;
+                margin-bottom: 1rem;
+                height: 42px;
                 padding: 3px;
+                border-radius: 12px;
             }
-            .bot-tab { font-size: 0.75rem; letter-spacing: 0.5px; }
-            .bot-slider { top: 3px; left: 3px; height: calc(100% - 6px); width: calc((100% - 6px) / 3); }
+            .bot-tab { font-size: 0.7rem; letter-spacing: 0; font-weight: 700; }
+            .bot-slider { top: 3px; left: 3px; height: calc(100% - 6px); width: calc((100% - 6px) / 3); border-radius: 9px; }
 
             .category-list {
                 flex-direction: row;
                 overflow-x: auto;
-                padding: 10px 5px;
-                margin: 0 -10px;
-                scrollbar-width: none; /* Firefox */
-                -ms-overflow-style: none; /* IE/Edge */
-                gap: 0.8rem;
-                mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
-                -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+                padding: 5px 2px;
+                margin: 0;
+                gap: 0.6rem;
+                mask-image: none;
+                -webkit-mask-image: none;
+                scroll-snap-type: x mandatory;
             }
-            .category-list::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+            .category-list::-webkit-scrollbar { display: none; }
 
             .category-item {
                 white-space: nowrap;
-                padding: 0.6rem 1.2rem;
-                font-size: 0.8rem;
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                border-radius: 100px;
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+                background: rgba(255, 255, 255, 0.04);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 10px;
+                scroll-snap-align: start;
             }
 
             .category-item.active {
                 background: var(--accent-red);
                 border-color: transparent;
-                box-shadow: 0 4px 12px rgba(255, 51, 51, 0.2);
+                box-shadow: 0 4px 12px rgba(255, 51, 51, 0.25);
             }
 
-            .cmd-header h1 { font-size: 1.8rem !important; }
-            .cmd-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+            .cmd-header { margin-bottom: 1.5rem; text-align: center; }
+            .cmd-header h1 { font-size: 1.6rem !important; margin-bottom: 0.4rem !important; }
+            .cmd-header p { font-size: 0.85rem !important; }
+
+            .cmd-toolbar { margin: 0 0 1rem; justify-content: center; }
+            .pro-toggle { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+
+            .search-box { margin-bottom: 1.5rem; }
+            .search-box input { padding: 0.7rem 1rem 0.7rem 2.2rem; font-size: 0.85rem; border-radius: 12px; }
+            .search-box i { left: 0.8rem; font-size: 0.8rem; }
+
+            .cmd-grid { grid-template-columns: 1fr; gap: 0.7rem; }
             
-            .cmd-card { padding: 1.2rem; border-radius: 16px; }
-            .cmd-name { font-size: 0.95rem; }
-            .cmd-desc { font-size: 0.8rem; line-height: 1.4; }
-            .cmd-usage { max-width: 55%; font-size: 0.65rem; }
-            .cmd-perm { font-size: 0.6rem; padding: 2px 6px; }
-            .copy-btn { padding: 5px 8px; font-size: 0.65rem; }
+            .cmd-card { padding: 1rem; border-radius: 14px; }
+            .cmd-name { font-size: 0.9rem; margin-bottom: 0.3rem; }
+            .cmd-desc { font-size: 0.78rem; line-height: 1.4; margin-bottom: 0.8rem; }
+            .cmd-footer { margin-top: 0.8rem; padding-top: 0.8rem; }
+            .cmd-usage { max-width: 50%; font-size: 0.65rem; }
+            .cmd-perm { font-size: 0.6rem; padding: 2px 5px; }
+            .copy-btn { padding: 4px 7px; font-size: 0.6rem; border-radius: 6px; }
         }
     </style>
 </head>

@@ -341,35 +341,49 @@
         .cycle-delay-1 { animation-delay: 0.5s; }
 
         @media (max-width: 768px) {
-            .community-hero { padding-top: 100px; padding-bottom: 50px; }
-            .community-hero h1 { font-size: 2.8rem; letter-spacing: -1px; }
-            .community-hero p { font-size: 1.1rem; margin-bottom: 2rem; padding: 0 1rem; }
-            .community-hero div[style*="display: flex"] { flex-direction: column; width: 100%; gap: 1rem !important; }
-            .community-hero .btn { width: 100%; }
+            .community-hero { padding-top: 110px !important; padding-bottom: 30px !important; }
+            .community-hero h1 { font-size: 2.2rem !important; line-height: 1.1; letter-spacing: -1.5px !important; }
+            .community-hero p { font-size: 0.9rem !important; margin-bottom: 2rem !important; padding: 0 10px; opacity: 0.8; }
+            .community-hero div[style*="display: flex"] { flex-direction: column !important; width: 100% !important; gap: 0.8rem !important; padding: 0 5px; }
+            .community-hero .btn { width: 100% !important; padding: 0.85rem !important; font-size: 0.9rem !important; border-radius: 12px !important; }
 
-            .stats-section { padding: 2rem 1.5rem; gap: 2rem; border-radius: 30px; margin-bottom: 60px; }
-            .stat-item h2 { font-size: 2.5rem; }
-            .stat-item p { font-size: 0.7rem; }
+            .stats-section { padding: 2rem 1rem !important; gap: 1.5rem !important; border-radius: 24px !important; margin-bottom: 50px !important; grid-template-columns: repeat(2, 1fr) !important; }
+            .stat-item h2 { font-size: 1.8rem !important; margin-bottom: 2px !important; }
+            .stat-item p { font-size: 0.6rem !important; letter-spacing: 1px !important; }
 
-            .community-grid { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 60px; }
-            .community-card { padding: 2rem 1.5rem; border-radius: 24px; }
-            .community-card i { font-size: 2.5rem; margin-bottom: 1.5rem; }
-            .community-card h3 { font-size: 1.5rem; }
+            .community-grid { grid-template-columns: 1fr !important; gap: 1rem !important; margin-bottom: 50px !important; padding: 0 5px; }
+            .community-card { padding: 1.8rem 1.2rem !important; border-radius: 20px !important; }
+            .community-card i { font-size: 2rem !important; margin-bottom: 1.2rem !important; }
+            .community-card h3 { font-size: 1.4rem !important; margin-bottom: 0.6rem !important; }
+            .community-card p { font-size: 0.85rem !important; margin-bottom: 1.5rem !important; line-height: 1.5 !important; }
+            .community-btn { padding: 0.75rem 1.5rem !important; font-size: 0.85rem !important; border-radius: 12px !important; }
 
-            .custom-discord-card { padding: 16px; border-radius: 20px; }
-            .discord-header { gap: 15px; }
-            .server-icon { width: 60px; height: 60px; border-radius: 15px; }
-            .server-info h4 { font-size: 1.25rem; }
-            .slogan { font-size: 0.75rem; max-width: 120px; }
+            .custom-discord-card { padding: 1rem !important; border-radius: 18px !important; width: 100% !important; }
+            .discord-header { gap: 12px !important; margin-bottom: 15px !important; }
+            .server-icon { width: 50px !important; height: 50px !important; border-radius: 12px !important; }
+            .server-info h4 { font-size: 1.1rem !important; }
+            .member-counts { margin-top: 5px !important; }
+            .count-item { font-size: 0.7rem !important; gap: 5px !important; }
+            .dot { width: 6px !important; height: 6px !important; }
+            
+            .discord-footer { padding: 10px 15px !important; border-radius: 14px !important; gap: 10px !important; }
+            .slogan { font-size: 0.7rem !important; max-width: 100% !important; line-height: 1.2 !important; }
+            .mini-join-btn { padding: 5px 12px !important; font-size: 0.75rem !important; }
 
-            .join-banner { padding: 3rem 1.5rem; border-radius: 30px; margin-bottom: 60px; }
-            .join-banner h2 { font-size: 2rem; }
-            .join-banner p { font-size: 1rem; margin-bottom: 2rem; }
-            .join-btn { padding: 1.2rem 2.5rem; font-size: 1rem; width: 100%; }
+            .join-banner { padding: 3rem 1.2rem !important; border-radius: 24px !important; margin-bottom: 50px !important; }
+            .join-banner h2 { font-size: 1.8rem !important; line-height: 1.2 !important; margin-bottom: 1rem !important; }
+            .join-banner p { font-size: 0.95rem !important; margin-bottom: 2rem !important; line-height: 1.5 !important; }
+            .join-btn { padding: 1rem 2rem !important; font-size: 1rem !important; width: 100% !important; border-radius: 14px !important; }
 
-            .dev-social-links { gap: 1rem; }
-            .social-circle-btn { width: 45px; height: 45px; font-size: 1.2rem; }
+            .dev-social-links { gap: 1rem !important; margin-top: 0.5rem !important; }
+            .social-circle-btn { width: 42px !important; height: 42px !important; font-size: 1.1rem !important; }
         }
+
+        @media (max-width: 480px) {
+            .stats-section { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+        }
+    </style>
+</head>
 
         @media (max-width: 480px) {
             .community-hero h1 { font-size: 2.4rem; }

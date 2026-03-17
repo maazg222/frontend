@@ -86,6 +86,7 @@ document.querySelectorAll('.btn').forEach(btn => {
 
 // Smart Dashboard routing: prefer Dashboard once ever accessed or bot invited
 document.addEventListener('DOMContentLoaded', () => {
+    updateAuthUI();
     const dashLinks = Array.from(document.querySelectorAll('a')).filter(a => a.textContent.trim().toLowerCase() === 'dashboard');
     dashLinks.forEach(link => {
         link.addEventListener('click', async (e) => {
@@ -113,3 +114,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function updateAuthUI() {
+    const navBtns = document.getElementById('nav-auth-btns') || document.querySelector('.nav-btns');
+    if (!navBtns) return;
+    
+    const userStr = localStorage.getItem('agency_chat_user');
+    if (userStr) {
+        try {
+            const user = JSON.parse(userStr);
+            navBtns.innerHTML = `
+                <div class="nav-auth-container">
+                    <a href="dashboard" class="btn btn-outline dashboard-btn">Dashboard</a>
+                    <div class="user-pill">
+                        <img src="${user.avatar}" class="user-avatar" alt="Avatar">
+                        <span class="user-name">${user.name}</span>
+                        <a href="#" onclick="logout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></a>
+                    </div>
+                </div>
+            `;
+        } catch (e) {
+            console.error('Error parsing user data:', e);
+        }
+    } else {
+        // Fallback to login button if FRONTEND_CONFIG is defined
+        if (typeof FRONTEND_CONFIG !== 'undefined' && FRONTEND_CONFIG.BACKEND_URL) {
+            navBtns.innerHTML = `
+                <a href="#" onclick="window.location.href = \`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary login-btn">Login</a>
+            `;
+        }
+    }
+}
+
+function logout() {
+    localStorage.removeItem('agency_chat_user');
+    window.location.reload();
+}

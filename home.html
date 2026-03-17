@@ -56,7 +56,6 @@
                 }
             }
 
-            updateAuthUI();
             const post = urlParams.get('post') || hashParams.get('post');
             if (post === 'dashboard') {
                 window.location.href = 'dashboard';
@@ -67,34 +66,6 @@
                 window.location.href = 'dashboard';
             }
         });
-
-        function updateAuthUI() {
-            const navBtns = document.getElementById('nav-auth-btns');
-            const userStr = localStorage.getItem('agency_chat_user');
-            
-            if (userStr) {
-                const user = JSON.parse(userStr);
-                navBtns.innerHTML = `
-                    <div class="nav-auth-container">
-                        <a href="dashboard" class="btn btn-outline dashboard-btn">Dashboard</a>
-                        <div class="user-pill">
-                            <img src="${user.avatar}" class="user-avatar" alt="Avatar">
-                            <span class="user-name">${user.name}</span>
-                            <a href="#" onclick="logout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></a>
-                        </div>
-                    </div>
-                `;
-            } else {
-                navBtns.innerHTML = `
-                    <a href="#" onclick="window.location.href = \`\${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary login-btn">Login</a>
-                `;
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('agency_chat_user');
-            window.location.reload();
-        }
     </script>
 
     <main>
