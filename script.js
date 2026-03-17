@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+window.addEventListener('load', updateAuthUI);
+
 function updateAuthUI() {
     console.log('Updating Auth UI...');
     const navBtns = document.getElementById('nav-auth-btns') || document.querySelector('.nav-btns');
