@@ -97,9 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const goInvite = () => { window.location.href = 'dashboard'; };
             if (postAfterInvite) { try { localStorage.removeItem('post_after_invite'); } catch {} goDashboard(); return; }
             let timedOut = false;
+            const config = window.FRONTEND_CONFIG || (typeof CONFIG !== 'undefined' ? CONFIG : null);
+            const backendUrl = config ? config.BACKEND_URL : 'https://backend-nine-tau-82.vercel.app';
             const to = setTimeout(() => { timedOut = true; hasDash ? goDashboard() : goInvite(); }, 3500);
             try {
-                const res = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/bot/guilds/list`, { cache: 'no-store' });
+                const res = await fetch(`${backendUrl}/api/bot/guilds/list`, { cache: 'no-store' });
                 clearTimeout(to);
                 if (!res.ok) return hasDash ? goDashboard() : goInvite();
                 const data = await res.json().catch(() => []);
@@ -116,14 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateAuthUI() {
+    console.log('Updating Auth UI...');
     const navBtns = document.getElementById('nav-auth-btns') || document.querySelector('.nav-btns');
-    if (!navBtns) return;
+    if (!navBtns) {
+        console.error('Auth button container not found!');
+        return;
+    }
     
     const userStr = localStorage.getItem('agency_chat_user');
+    const config = window.FRONTEND_CONFIG || (typeof CONFIG !== 'undefined' ? CONFIG : null);
+    
     if (userStr) {
         try {
             const user = JSON.parse(userStr);
-            // Check if we already have the auth pill to avoid redundant updates
+            console.log('User found:', user.name);
             if (navBtns.querySelector('.user-auth-pill')) return;
 
             navBtns.innerHTML = `
@@ -143,12 +151,18 @@ function updateAuthUI() {
             localStorage.removeItem('agency_chat_user');
         }
     } else {
-        // Only inject login if not already present
+        console.log('No user found, showing login button');
         if (navBtns.querySelector('.login-btn')) return;
 
-        if (typeof FRONTEND_CONFIG !== 'undefined' && FRONTEND_CONFIG.BACKEND_URL) {
+        if (config && config.BACKEND_URL) {
+            console.log('Using config backend URL:', config.BACKEND_URL);
             navBtns.innerHTML = `
-                <a href="#" onclick="window.location.href = \`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary login-btn">Login</a>
+                <a href="#" onclick="window.location.href = '${config.BACKEND_URL}/api/auth/discord?state=dashboard'" class="btn btn-primary login-btn">Login</a>
+            `;
+        } else {
+            console.log('Using fallback backend URL');
+            navBtns.innerHTML = `
+                <a href="https://backend-nine-tau-82.vercel.app/api/auth/discord?state=dashboard" class="btn btn-primary login-btn">Login</a>
             `;
         }
     }
