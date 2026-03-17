@@ -127,18 +127,15 @@ function updateAuthUI() {
             if (navBtns.querySelector('.user-auth-pill')) return;
 
             navBtns.innerHTML = `
-                <div class="nav-auth-container">
-                    <a href="dashboard" class="btn btn-primary dashboard-btn" style="padding: 8px 20px; border-radius: 100px; font-weight: 700;">Dashboard</a>
-                    <div class="user-auth-pill">
-                        <div class="user-info-group">
-                            <img src="${user.avatar}" class="user-avatar" alt="Avatar">
-                            <span class="user-name">${user.name}</span>
-                        </div>
-                        <button onclick="logout()" class="logout-pill-btn">
-                            <i class="fas fa-right-from-bracket"></i>
-                            <span>Logout</span>
-                        </button>
+                <div class="user-auth-pill">
+                    <div class="user-info-group">
+                        <img src="${user.avatar}" class="user-avatar" alt="Avatar">
+                        <span class="user-name">${user.name}</span>
                     </div>
+                    <button onclick="logout()" class="logout-pill-btn">
+                        <i class="fas fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
                 </div>
             `;
         } catch (e) {
