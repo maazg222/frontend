@@ -651,23 +651,8 @@ body {
     .dev-social-links { gap: 1rem !important; }
     .social-circle-btn { width: 50px !important; height: 50px !important; font-size: 1.25rem !important; }
 
-    /* Commands Page Mobile */
-    .cmd-hero { padding-top: 110px !important; padding-bottom: 30px !important; }
-    .cmd-hero h1 { font-size: 2.5rem !important; letter-spacing: -1px !important; }
-    .cmd-hero p { font-size: 1.05rem !important; padding: 0 1rem !important; }
-    
-    .cmd-container { grid-template-columns: 1fr !important; padding: 1.5rem 1rem !important; gap: 2rem !important; }
-    .cmd-sidebar { position: static !important; padding: 1.25rem !important; border-radius: 20px !important; }
-    
-    .bot-selector { margin-bottom: 1.5rem !important; height: 48px !important; }
-    .bot-tab { font-size: 0.8rem !important; }
-    
-    .category-list { gap: 0.75rem !important; padding: 0.5rem 0 !important; }
-    .category-item { padding: 0.6rem 1.1rem !important; font-size: 0.8rem !important; }
-    
-    .cmd-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
-    .cmd-card { padding: 1.5rem !important; border-radius: 20px !important; }
-    .cmd-usage { max-width: 60% !important; font-size: 0.75rem !important; }
+    /* Commands Page Mobile - Removed to allow commands.html local styles to take effect */
+
 }
 
 @media (max-width: 480px) {
