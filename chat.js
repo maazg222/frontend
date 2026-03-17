@@ -127,7 +127,7 @@ function updateStatusUI(status, count) {
     // Initial fake connection delay
     if (!isFakeConnected) {
         userCountText.textContent = 'connecting..';
-        if (statusDot) statusDot.style.background = '#f10000ff'; // Gray
+        if (statusDot) statusDot.style.background = '#666'; // Gray while connecting
         
         setTimeout(() => {
             isFakeConnected = true;
