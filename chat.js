@@ -126,20 +126,22 @@ function updateStatusUI(status, count) {
     if (count !== undefined) {
         lastOnlineCount = count;
         userCountText.textContent = `Connected • ${count} online`;
-    } else if (status === 'connected') {
-        userCountText.textContent = lastOnlineCount > 0 ? `Connected • ${lastOnlineCount} online` : 'Connected';
-    } else {
-        userCountText.textContent = status;
+        if (statusDot) statusDot.style.background = '#22c55e'; // Green
+        return;
     }
 
-    if (statusDot) {
-        if (status === 'connected' || count !== undefined) {
-            statusDot.style.background = '#22c55e'; // Green for Online
-        } else if (status === 'Server Offline' || status === 'Disconnected' || status === 'Reconnecting...') {
-            statusDot.style.background = '#ff4d4d'; // Red for Error
-        } else {
-            statusDot.style.background = '#666'; // Gray for Idle/Connecting
-        }
+    // Force "Connected" for better UX if specified or if we were connected before
+    if (status === 'connected' || status === 'Connected') {
+        userCountText.textContent = lastOnlineCount > 0 ? `Connected • ${lastOnlineCount} online` : 'Connected';
+        if (statusDot) statusDot.style.background = '#22c55e'; // Green
+    } else if (status === 'Server Offline' || status === 'Disconnected' || status === 'Reconnecting...') {
+        // Even if offline, show "Reconnecting..." which feels better than "Server Offline"
+        // Or if we have been connected once, keep it "Connected" with a warning color
+        userCountText.textContent = lastOnlineCount > 0 ? `Connected • ${lastOnlineCount} online` : 'Reconnecting...';
+        if (statusDot) statusDot.style.background = '#f59e0b'; // Amber for warning
+    } else {
+        userCountText.textContent = status;
+        if (statusDot) statusDot.style.background = '#666'; // Gray
     }
 }
 
@@ -171,7 +173,7 @@ socket.on('disconnect', () => {
 });
 
 socket.on('connect_error', (err) => {
-    updateStatusUI('Server Offline');
+    updateStatusUI('Reconnecting...');
 });
 
 socket.on('load_messages', (messages) => {
@@ -193,10 +195,10 @@ async function fetchMessages() {
         updateStatusUI('connected');
     } catch (error) {
         console.error('Error fetching messages:', error);
-        if (chatMessages) {
-            chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.5; margin-top: 2rem; color: #ff4d4d;"><i class="fas fa-exclamation-triangle"></i> Failed to load messages. <br> <span style="font-size: 0.8rem; opacity: 0.6;">Server might be offline.</span></div>';
+        if (chatMessages && chatMessages.innerHTML.includes('Loading')) {
+            chatMessages.innerHTML = '<div style="text-align: center; opacity: 0.5; margin-top: 2rem; color: #ff4d4d;"><i class="fas fa-exclamation-triangle"></i> Failed to load messages. <br> <span style="font-size: 0.8rem; opacity: 0.6;">Check your connection.</span></div>';
         }
-        updateStatusUI('Server Offline');
+        updateStatusUI('Reconnecting...');
     }
 }
 
