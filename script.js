@@ -34,7 +34,7 @@ document.querySelectorAll('.feature-card, .stat-item, .hero h1, .hero p, .hero-b
 // Counter Animation Logic
 const startCounter = (el) => {
     const target = parseInt(el.getAttribute('data-target'));
-    const suffix = el.getAttribute('data-suffix');
+    const suffix = el.hasAttribute('data-suffix') ? el.getAttribute('data-suffix') : (target === 99 ? '%' : '+');
     const duration = 2000; // 2 seconds
     const increment = target / (duration / 16);
     let current = 0;
@@ -42,12 +42,10 @@ const startCounter = (el) => {
     const update = () => {
         current += increment;
         if (current < target) {
-            const displaySuffix = suffix !== null ? suffix : (target === 99 ? '%' : '+');
-            el.innerText = Math.ceil(current) + displaySuffix;
+            el.innerText = Math.ceil(current) + suffix;
             requestAnimationFrame(update);
         } else {
-            const displaySuffix = suffix !== null ? suffix : (target === 99 ? '%' : '+');
-            el.innerText = target + displaySuffix;
+            el.innerText = target + suffix;
         }
     };
     update();
