@@ -9,28 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="clean-urls.js" defer></script>
-    <style>
-        @media (max-width: 768px) {
-            main.container { padding-top: 100px !important; padding-bottom: 60px !important; }
-            header h1 { font-size: 2.5rem !important; }
-            header p { font-size: 0.95rem !important; padding: 0 1rem; }
-            
-            .feature-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-            .feature-card { padding: 2rem 1.5rem !important; }
-            .feature-card h2 { font-size: 1.8rem !important; }
-            
-            .feature-card div[style*="display: grid"] { 
-                grid-template-columns: 1fr !important; 
-                gap: 0.8rem !important; 
-            }
-            
-            .feature-card div[style*="display: flex"] {
-                flex-direction: column;
-                gap: 1rem !important;
-            }
-            .feature-card .btn { width: 100%; text-align: center; }
-        }
-    </style>
 </head>
 <body>
     <div class="mesh-bg"></div>
@@ -71,16 +49,16 @@
             <p style="color: var(--text-gray); font-size: 1rem; max-width: 500px; margin: 0 auto;">Two specialized systems engineered for total server dominance.</p>
         </header>
 
-        <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto;">
+        <div class="feature-grid-2" style="grid-template-columns: repeat(2, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto;">
             <!-- Hitman Bot -->
-            <div class="feature-card" style="padding: 2.5rem; border-color: var(--accent-red-glow);">
+            <div class="feature-card-large" style="padding: 2.5rem; border-color: var(--accent-red-glow); background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 24px;">
                 <div class="feature-icon" style="width: 60px; height: 60px; background: #000; border: 1px solid var(--accent-red-glow); border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                 <img src="hitman-logo.png" alt="HITMAN Logo" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem;">HITMAN</h2>
                 <p style="font-size: 0.95rem; color: var(--text-gray); margin-bottom: 1.5rem; line-height: 1.6;">The gold standard in server protection. Hitman delivers an uncompromising security suite engineered for high-stakes communities and professional environments.</p>
                 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
+                <div class="grid-2-col" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
                     <div style="background: rgba(255, 255, 255, 0.02); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease;">
                         <i class="fas fa-radiation" style="color: var(--accent-red); margin-bottom: 6px; font-size: 0.75rem;"></i>
                         <h4 style="color: white; font-size: 0.75rem; font-weight: 700;">Antinuke</h4>
@@ -123,21 +101,21 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem;">
+                <div class="flex-mobile-col" style="display: flex; gap: 0.75rem;">
                     <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard`" class="btn btn-primary" style="flex: 1; text-align: center; padding: 0.8rem;">Invite Hitman</a>
                     <a href="commands?bot=hitman" class="btn btn-outline" style="flex: 1; text-align: center; padding: 0.8rem;">Commands</a>
                 </div>
             </div>
 
             <!-- Monix Bot -->
-            <div class="feature-card" style="padding: 2.5rem; border-color: var(--accent-red-glow);">
+            <div class="feature-card-large" style="padding: 2.5rem; border-color: var(--accent-red-glow); background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 24px;">
                 <div class="feature-icon" style="width: 60px; height: 60px; background: #000; border: 1px solid var(--accent-red-glow); border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                 <img src="236_game_credits_coin_.png" alt="MONIX Logo" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem;">MONIX</h2>
                 <p style="font-size: 0.95rem; color: var(--text-gray); margin-bottom: 1.5rem; line-height: 1.6;">A high-performance economy system engineered by Agency Dev Maaz. Dominate the server leaderboard with Nix Coins, shop upgrades, and strategic coinflips.</p>
                 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
+                <div class="grid-2-col" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
                     <div style="background: rgba(255, 255, 255, 0.02); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease;">
                         <i class="fas fa-coins" style="color: var(--accent-red); margin-bottom: 6px; font-size: 0.75rem;"></i>
                         <h4 style="color: white; font-size: 0.75rem; font-weight: 700;">Nix Coin</h4>
@@ -180,21 +158,21 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem;">
+                <div class="flex-mobile-col" style="display: flex; gap: 0.75rem;">
                     <a href="https://discord.com/oauth2/authorize?client_id=1473774832821993624&permissions=8&integration_type=0&scope=bot" class="btn btn-primary" style="flex: 1; text-align: center; padding: 0.8rem;">Invite Monix</a>
                     <a href="commands.html?bot=monix" class="btn btn-outline" style="flex: 1; text-align: center; padding: 0.8rem;">Commands</a>
                 </div>
             </div>
 
             <!-- AGXZ Bot -->
-            <div class="feature-card" style="padding: 2.5rem; border-color: rgba(59, 130, 246, 0.3);">
+            <div class="feature-card-large" style="padding: 2.5rem; border-color: rgba(59, 130, 246, 0.3); background: var(--bg-dark); border: 1px solid var(--glass-border); border-radius: 24px;">
                 <div class="feature-icon" style="width: 60px; height: 60px; background: #000; border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 15px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                 <img src="agxz-logo.png" alt="AGXZ Logo" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
                 <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem;">AGXZ</h2>
                 <p style="font-size: 0.95rem; color: var(--text-gray); margin-bottom: 1.5rem; line-height: 1.6;">A versatile multi-purpose bot designed to enhance community engagement through high-fidelity music, social features, and comprehensive management tools.</p>
 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
+                <div class="grid-2-col" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-bottom: 1.5rem;">
                     <div style="background: rgba(255, 255, 255, 0.02); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s ease;">
                         <i class="fas fa-radiation" style="color: #3b82f6; margin-bottom: 6px; font-size: 0.75rem;"></i>
                         <h4 style="color: white; font-size: 0.75rem; font-weight: 700;">Antinuke</h4>
@@ -237,7 +215,7 @@
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem;">
+                <div class="flex-mobile-col" style="display: flex; gap: 0.75rem;">
                     <a href="https://discord.com/oauth2/authorize?client_id=1475186184681558107&permissions=8&integration_type=0&scope=bot+applications.commands" class="btn btn-primary" style="flex: 1; text-align: center; background: #3b82f6; padding: 0.8rem;">Invite AGXZ</a>
                     <a href="commands.html?bot=agxz" class="btn btn-outline" style="flex: 1; text-align: center; padding: 0.8rem;">Commands</a>
                 </div>

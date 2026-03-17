@@ -62,7 +62,7 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-red); }
 
 /* Layout */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 
 /* Navbar */
 .navbar {
@@ -337,10 +337,10 @@ body {
 @media (max-width: 768px) {
     .container { padding: 0 1.5rem; }
     
-    .navbar { padding: 0.8rem 0; }
-    .navbar.scrolled { padding: 0.6rem 0; }
+    .navbar { padding: 0.6rem 0; }
+    .navbar.scrolled { padding: 0.5rem 0; }
     
-    .logo { font-size: 1.15rem; gap: 8px; }
+    .logo { font-size: 1rem; gap: 5px; flex-shrink: 0; }
     
     .nav-links {
         position: fixed;
@@ -369,23 +369,30 @@ body {
         font-weight: 700;
     }
 
-    .nav-btns { gap: 0.5rem; }
-    .btn { padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+    .nav-btns { gap: 5px !important; flex-shrink: 1; min-width: 0; justify-content: flex-end; }
+    .btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
 
     /* Auth UI Mobile Fixes */
     .nav-auth-container {
-        gap: 8px !important;
+        gap: 5px !important;
     }
     .user-pill {
-        padding: 4px 8px !important;
-        border-radius: 15px !important;
+        padding: 4px 6px !important;
+        border-radius: 12px !important;
+        min-width: 0;
+        flex-shrink: 0;
     }
-    .user-pill span {
-        display: none;
+    .user-pill .user-name {
+        display: none !important;
     }
     .user-avatar {
-        width: 20px !important;
-        height: 20px !important;
+        width: 18px !important;
+        height: 18px !important;
+        flex-shrink: 0;
+    }
+    .dashboard-btn {
+        padding: 0.4rem 0.8rem !important;
+        font-size: 0.7rem !important;
     }
 
     /* Mobile Menu Toggle */
@@ -409,13 +416,14 @@ body {
     .mobile-menu-toggle.active span:nth-child(2) { opacity: 0; }
     .mobile-menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
 
-    .hero { padding-top: 100px; min-height: auto; padding-bottom: 60px; }
-    .hero h1 { font-size: 2.8rem; letter-spacing: -1.5px; margin-bottom: 1rem; }
-    .hero p { font-size: 1rem; margin-bottom: 2rem; padding: 0 1rem; line-height: 1.5; }
+    .hero { padding-top: 130px; min-height: auto; padding-bottom: 60px; }
+    .hero-tag { padding: 0.4rem 0.8rem; font-size: 0.65rem; margin-bottom: 1.5rem; }
+    .hero h1 { font-size: 2.6rem; letter-spacing: -1.2px; margin-bottom: 1rem; }
+    .hero p { font-size: 0.95rem; margin-bottom: 2rem; padding: 0 1rem; line-height: 1.5; }
     .hero-btns { flex-direction: column; width: 100%; gap: 1rem; padding: 0 1rem; }
     .hero-btns .btn { width: 100%; text-align: center; }
 
-    .section-title { font-size: 2.2rem; margin-bottom: 2.5rem; }
+    .section-title { font-size: 2.1rem; margin-bottom: 2.5rem; }
     .feature-grid { grid-template-columns: 1fr; gap: 1rem; }
     .feature-card { padding: 1.5rem; border-radius: 20px; }
     .feature-icon { width: 40px; height: 40px; margin-bottom: 1.2rem; font-size: 1.1rem; }
@@ -440,9 +448,43 @@ body {
     footer .container div { flex-wrap: wrap; justify-content: center; gap: 1rem; }
     footer p { font-size: 0.8rem !important; }
     footer a { font-size: 0.8rem !important; }
-}
 
-@media (max-width: 480px) {
+    /* Bots Page Mobile Improvements */
+    main.container { padding-top: 100px !important; padding-bottom: 60px !important; }
+    header h1 { font-size: 2.5rem !important; }
+    header p { font-size: 0.95rem !important; padding: 0 1rem; }
+    
+    .feature-grid-2 { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+    .feature-card-large { padding: 2rem 1.5rem !important; }
+    .feature-card-large h2 { font-size: 1.8rem !important; }
+    
+    .grid-2-col { 
+        grid-template-columns: 1fr !important; 
+        gap: 0.8rem !important; 
+    }
+    
+    .flex-mobile-col {
+         flex-direction: column !important;
+         gap: 1rem !important;
+     }
+     .flex-mobile-col .btn { width: 100%; text-align: center; }
+
+     /* Pricing Page Mobile Improvements */
+     .premium-hero { padding-top: 100px !important; padding-bottom: 40px !important; }
+     .premium-hero h1 { font-size: 2.8rem !important; letter-spacing: -1px !important; }
+     .premium-hero p { font-size: 1rem !important; margin-bottom: 2rem !important; padding: 0 1rem !important; }
+     
+     .pricing-container { grid-template-columns: 1fr !important; gap: 2rem !important; padding-bottom: 60px !important; }
+     .pricing-card { padding: 2.5rem 1.5rem !important; border-radius: 24px !important; }
+     .pricing-card.popular { transform: scale(1) !important; margin: 1rem 0 !important; }
+     .pricing-card.popular:hover { transform: translateY(-10px) !important; }
+     
+     .plan-price { font-size: 2.5rem !important; }
+     .badge { top: 15px !important; right: 15px !important; padding: 4px 12px !important; font-size: 0.65rem !important; }
+     .buy-btn { padding: 1rem !important; }
+ }
+ 
+ @media (max-width: 480px) {
     .container { padding: 0 1rem; }
     .hero h1 { font-size: 2.2rem; }
     .logo { font-size: 1.05rem; }
