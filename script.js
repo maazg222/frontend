@@ -131,14 +131,19 @@ function updateAuthUI() {
     if (userStr) {
         try {
             const user = JSON.parse(userStr);
-            console.log('User found:', user.name);
+            if (!user || typeof user !== 'object') throw new Error('Invalid user data');
+            
+            console.log('User found:', user.name || 'Unknown');
             if (navBtns.querySelector('.user-auth-pill')) return;
+
+            const avatar = user.avatar || 'logo.png';
+            const name = user.name || 'User';
 
             navBtns.innerHTML = `
                 <div class="user-auth-pill">
                     <div class="user-info-group">
-                        <img src="${user.avatar}" class="user-avatar" alt="Avatar">
-                        <span class="user-name">${user.name}</span>
+                        <img src="${avatar}" class="user-avatar" alt="Avatar">
+                        <span class="user-name">${name}</span>
                     </div>
                     <button onclick="logout()" class="logout-pill-btn">
                         <i class="fas fa-right-from-bracket"></i>
