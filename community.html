@@ -627,53 +627,6 @@
         fetchDiscordData();
         setInterval(fetchDiscordData, 60000); // Update every minute to avoid rate limits
 
-        // Stats Counter Animation
-        const counters = document.querySelectorAll('.counter');
-        const duration = 2000; // 2 seconds for all animations
-
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const suffix = counter.getAttribute('data-suffix') || '';
-                let startTime = null;
-
-                const step = (timestamp) => {
-                    if (!startTime) startTime = timestamp;
-                    const progress = Math.min((timestamp - startTime) / duration, 1);
-                    const currentCount = Math.floor(progress * target);
-                    
-                    counter.innerText = currentCount + suffix;
-
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    } else {
-                        counter.innerText = target + suffix;
-                    }
-                };
-
-                window.requestAnimationFrame(step);
-            });
-        };
-
-        // Intersection Observer for counters
-        const observerOptions = {
-            threshold: 0.5
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        const statsSection = document.querySelector('.stats-section');
-        if (statsSection) {
-            observer.observe(statsSection);
-        }
-
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('.navbar');
             if (window.scrollY > 50) {
