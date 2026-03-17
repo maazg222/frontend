@@ -449,13 +449,19 @@ setInterval(async () => {
                     tempMsgs.forEach(tempMsg => {
                         const textElem = tempMsg.querySelector('.message-text');
                         const userSpan = tempMsg.querySelector('.user-name');
-                        if (textElem && textElem.innerText === msg.text && 
+                        const rawText = textElem ? textElem.getAttribute('data-raw-text') : '';
+                        if (rawText === msg.text && 
                             userSpan && userSpan.getAttribute('data-user-id') === msg.userId) {
                             // This is our optimistic message! Update its ID and timestamp instead of appending
                             tempMsg.setAttribute('data-message-id', msg.id);
                             const timeElem = tempMsg.querySelector('.time-text');
                             if (timeElem && msg.timestamp) {
-                                timeElem.innerText = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                try {
+                                    const date = new Date(msg.timestamp);
+                                    if (!isNaN(date)) {
+                                        timeElem.innerText = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                                    }
+                                } catch (e) {}
                             }
                             matchedTemp = true;
                         }
@@ -857,7 +863,21 @@ async function sendMessage() {
             throw new Error(errorData.message || 'Failed to send message');
         }
         
-        // Message sent successfully. The socket will broadcast it back to us.
+        const confirmedMsg = await response.json();
+        // Update the optimistic message with the real data from server
+        const tempMsgEl = document.querySelector(`[data-message-id="${tempId}"]`);
+        if (tempMsgEl && confirmedMsg && confirmedMsg.id) {
+            tempMsgEl.setAttribute('data-message-id', confirmedMsg.id);
+            const timeElem = tempMsgEl.querySelector('.time-text');
+            if (timeElem && confirmedMsg.timestamp) {
+                try {
+                    const date = new Date(confirmedMsg.timestamp);
+                    if (!isNaN(date)) {
+                        timeElem.innerText = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    }
+                } catch (e) {}
+            }
+        }
     } catch (err) {
         console.error('Send message error:', err);
         showToast(err.message || 'Error sending message', 'error');
@@ -895,16 +915,21 @@ socket.on('receive_message', (msg) => {
     if (existing) return;
     
     // Check if it's our own message that was just sent optimistically (by matching text and userId)
-    // We can also check for temporary IDs if we want to be more precise
     const tempMsgs = document.querySelectorAll('[data-message-id^="temp-"]');
     for (const tempMsg of tempMsgs) {
         const textElem = tempMsg.querySelector('.message-text');
-        if (textElem && textElem.innerText === msg.text && tempMsg.querySelector('.user-name').getAttribute('data-user-id') === msg.userId) {
+        const rawText = textElem ? textElem.getAttribute('data-raw-text') : '';
+        if (rawText === msg.text && tempMsg.querySelector('.user-name').getAttribute('data-user-id') === msg.userId) {
             // Update the temporary message with the real ID and timestamp from server
             tempMsg.setAttribute('data-message-id', msg.id);
             const timeElem = tempMsg.querySelector('.time-text');
             if (timeElem && msg.timestamp) {
-                timeElem.innerText = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                try {
+                    const date = new Date(msg.timestamp);
+                    if (!isNaN(date)) {
+                        timeElem.innerText = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    }
+                } catch (e) {}
             }
             return;
         }
@@ -1011,7 +1036,7 @@ function appendMessage(msg, isOwn) {
                 </div>
             </div>
             ${replyQuoteHTML}
-            <div class="message-text">${parsedText}</div>
+            <div class="message-text" data-raw-text="${(msg.text || '').replace(/"/g, '&quot;')}">${parsedText}</div>
         </div>
     `;
 
