@@ -6,7 +6,6 @@
     <title>Agency - Community Chat</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
     <script src="clean-urls.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -683,23 +682,65 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Overlay when sidebar is open */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            z-index: 2999;
-            display: none;
-            opacity: 0;
-            transition: 0.3s;
+        @media (max-width: 768px) {
+            body { align-items: stretch; justify-content: stretch; }
+            .chat-layout { width: 100%; height: 100vh; border-radius: 0; border: none; }
+            
+            .sidebar { 
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100%;
+                z-index: 3000;
+                transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: #0a0a0a;
+                width: 280px;
+                box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+            }
+            .sidebar.active { left: 0; }
+
+            .menu-toggle { display: block; }
+
+            .chat-header { padding: 1rem; }
+            .chat-header h3 { font-size: 1rem; }
+            
+            .chat-messages { padding: 1rem; gap: 1rem; }
+            .message { max-width: 95%; }
+            .message-text { padding: 0.7rem 1rem; font-size: 0.9rem; }
+            
+            .chat-input-area { padding: 1rem; }
+            .input-wrapper { padding: 0.4rem 0.8rem; }
+            .reply-preview-bar { left: 0.5rem; right: 0.5rem; }
+            
+            .modal-content { padding: 1.5rem; width: 95%; border-radius: 20px; }
+            
+            .login-content h1 { font-size: 2.2rem; }
+            .login-content p { font-size: 0.85rem; padding: 0 1.5rem; }
+
+            /* Overlay when sidebar is open */
+            .sidebar-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                backdrop-filter: blur(4px);
+                z-index: 2999;
+                display: none;
+                opacity: 0;
+                transition: 0.3s;
+            }
+            .sidebar-overlay.active {
+                display: block;
+                opacity: 1;
+            }
         }
-        .sidebar-overlay.active {
-            display: block;
-            opacity: 1;
+
+        @media (max-width: 480px) {
+            .message-text { padding: 0.6rem 1rem; font-size: 0.85rem; }
+            .message-avatar { width: 32px; height: 32px; }
+            .user-name { font-size: 0.8rem; }
         }
 
         /* Custom Select Styling */

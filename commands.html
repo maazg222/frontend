@@ -6,7 +6,6 @@
     <title>Commands | AGENCY DEV</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="mobile.css" media="screen and (max-width: 768px)">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -340,6 +339,69 @@
             font-size: 0.9rem;
         }
 
+        @media (max-width: 768px) {
+            .cmd-hero { padding-top: 100px; padding-bottom: 30px; }
+            .cmd-hero h1 { font-size: 2.2rem; }
+            .cmd-hero p { font-size: 0.9rem; padding: 0 1rem; }
+            
+            .cmd-container { 
+                grid-template-columns: 1fr; 
+                padding: 20px 15px;
+                gap: 1.5rem;
+            }
+
+            .cmd-sidebar {
+                position: static;
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            .bot-selector {
+                margin-bottom: 1.5rem;
+                height: 44px;
+                padding: 3px;
+            }
+            .bot-tab { font-size: 0.75rem; letter-spacing: 0.5px; }
+            .bot-slider { top: 3px; left: 3px; height: calc(100% - 6px); width: calc((100% - 6px) / 3); }
+
+            .category-list {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px 5px;
+                margin: 0 -10px;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE/Edge */
+                gap: 0.8rem;
+                mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            }
+            .category-list::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+
+            .category-item {
+                white-space: nowrap;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                border-radius: 100px;
+            }
+
+            .category-item.active {
+                background: var(--accent-red);
+                border-color: transparent;
+                box-shadow: 0 4px 12px rgba(255, 51, 51, 0.2);
+            }
+
+            .cmd-header h1 { font-size: 1.8rem !important; }
+            .cmd-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+            
+            .cmd-card { padding: 1.2rem; border-radius: 16px; }
+            .cmd-name { font-size: 0.95rem; }
+            .cmd-desc { font-size: 0.8rem; line-height: 1.4; }
+            .cmd-usage { max-width: 55%; font-size: 0.65rem; }
+            .cmd-perm { font-size: 0.6rem; padding: 2px 6px; }
+            .copy-btn { padding: 5px 8px; font-size: 0.65rem; }
+        }
     </style>
 </head>
 <body>
