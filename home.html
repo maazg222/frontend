@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="config.js" defer></script>
+    <script src="script.js" defer></script>
     <script src="clean-urls.js" defer></script>
 </head>
 <body>
@@ -25,7 +27,7 @@
                 <a href="community">Community</a>
             </div>
             <div class="nav-btns" id="nav-auth-btns">
-                <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord`" class="btn btn-primary login-btn">Login</a>
+                <!-- Auth UI injected by script.js -->
             </div>
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <span></span>
@@ -34,6 +36,31 @@
             </div>
         </div>
     </nav>
+
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
+        }
+        
+        // Initial check for user data in URL
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+            const userFromUrl = urlParams.get('user_data') || hashParams.get('user_data');
+            
+            if (userFromUrl) {
+                try {
+                    const userData = JSON.parse(decodeURIComponent(userFromUrl));
+                    localStorage.setItem('agency_chat_user', JSON.stringify(userData));
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+        })();
+    </script>
 
 
 
@@ -146,40 +173,22 @@
         </div>
     </footer>
 
-    <script src="config.js"></script>
-    <script src="script.js"></script>
     <script>
-        function toggleMobileMenu() {
-            document.querySelector('.nav-links').classList.toggle('active');
-            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
-        }
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
-            const userFromUrl = urlParams.get('user_data') || hashParams.get('user_data');
+            const post = urlParams.get('post') || (new URLSearchParams((window.location.hash || '').replace(/^#/, ''))).get('post');
             
-            if (userFromUrl) {
-                try {
-                    const userData = JSON.parse(decodeURIComponent(userFromUrl));
-                    localStorage.setItem('agency_chat_user', JSON.stringify(userData));
-                    // Clean URL
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } catch (e) {
-                    console.error('Error parsing user data:', e);
-                }
-            }
-
-            const post = urlParams.get('post') || hashParams.get('post');
             if (post === 'dashboard') {
                 window.location.href = 'dashboard';
             }
+            
             const postAfterInvite = localStorage.getItem('post_after_invite');
             if (postAfterInvite === 'dashboard') {
                 localStorage.removeItem('post_after_invite');
                 window.location.href = 'dashboard';
             }
 
-            // Ensure Auth UI is updated after potentially setting user data from URL
+            // Ensure Auth UI is updated
             if (typeof updateAuthUI === 'function') {
                 updateAuthUI();
             }

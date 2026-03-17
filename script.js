@@ -123,6 +123,9 @@ function updateAuthUI() {
     if (userStr) {
         try {
             const user = JSON.parse(userStr);
+            // Check if we already have the auth pill to avoid redundant updates
+            if (navBtns.querySelector('.user-auth-pill')) return;
+
             navBtns.innerHTML = `
                 <div class="nav-auth-container">
                     <a href="dashboard" class="btn btn-primary dashboard-btn" style="padding: 8px 20px; border-radius: 100px; font-weight: 700;">Dashboard</a>
@@ -140,9 +143,12 @@ function updateAuthUI() {
             `;
         } catch (e) {
             console.error('Error parsing user data:', e);
+            localStorage.removeItem('agency_chat_user');
         }
     } else {
-        // Fallback to login button if FRONTEND_CONFIG is defined
+        // Only inject login if not already present
+        if (navBtns.querySelector('.login-btn')) return;
+
         if (typeof FRONTEND_CONFIG !== 'undefined' && FRONTEND_CONFIG.BACKEND_URL) {
             navBtns.innerHTML = `
                 <a href="#" onclick="window.location.href = \`${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary login-btn">Login</a>
