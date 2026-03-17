@@ -75,12 +75,12 @@
             if (userStr) {
                 const user = JSON.parse(userStr);
                 navBtns.innerHTML = `
-                    <div class="nav-auth-container" style="display: flex; align-items: center; gap: 15px;">
+                    <div class="nav-auth-container">
                         <a href="dashboard" class="btn btn-outline dashboard-btn">Dashboard</a>
-                        <div class="user-pill" style="display: flex; align-items: center; gap: 10px; padding: 5px 12px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                            <img src="${user.avatar}" class="user-avatar" style="width: 24px; height: 24px; border-radius: 50%;" alt="Avatar">
-                            <span class="user-name" style="font-weight: 600; font-size: 0.85rem;">${user.name}</span>
-                            <a href="#" onclick="logout()" style="color: var(--accent-red); margin-left: 5px; font-size: 0.8rem;"><i class="fas fa-sign-out-alt"></i></a>
+                        <div class="user-pill">
+                            <img src="${user.avatar}" class="user-avatar" alt="Avatar">
+                            <span class="user-name">${user.name}</span>
+                            <a href="#" onclick="logout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </div>
                 `;

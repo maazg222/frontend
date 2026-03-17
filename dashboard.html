@@ -539,6 +539,70 @@
         }
         .stat-label{font-size:.8rem;color:var(--text-gray)}
         .stat-value{font-size:1.1rem;font-weight:800}
+
+        /* Manage Servers Button Styling */
+        .manage-servers-btn {
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            min-width: 280px;
+            transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            #page-header h1 {
+                justify-content: center;
+            }
+
+            .user-profile-nav {
+                width: 100%;
+                justify-content: center;
+                padding: 10px 15px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .logout-badge {
+                margin-left: 0;
+            }
+
+            .manage-servers-btn {
+                width: 100%;
+                min-width: 0;
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                white-space: normal;
+                line-height: 1.2;
+                border-radius: 16px; /* Switch from pill to rounded for multi-line */
+            }
+
+            .tab-content .config-card {
+                padding: 2.5rem 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .manage-servers-btn {
+                padding: 0.9rem 1.25rem;
+                font-size: 0.95rem;
+            }
+            .top-bar p {
+                font-size: 0.8rem !important;
+                padding: 0 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -616,7 +680,7 @@
                     <p style="color: var(--text-gray); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
                         Click the button below to be redirected to our main management portal where you can invite the bot and configure your servers.
                     </p>
-                    <a href="https://nonjuristic-audria-uncapturable.ngrok-free.dev/" class="btn btn-primary btn-pill" style="padding: 1rem 3rem; font-size: 1.1rem; font-weight: 800;">
+                    <a href="https://nonjuristic-audria-uncapturable.ngrok-free.dev/" class="btn btn-primary btn-pill manage-servers-btn">
                         <i class="fas fa-external-link-alt" style="margin-right: 10px;"></i> MANAGE SERVERS
                     </a>
                 </div>
