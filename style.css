@@ -73,6 +73,82 @@ body {
     background-size: 50px 50px;
 }
 
+/* User Auth Pill Styles */
+.user-auth-pill {
+    display: flex;
+    align-items: center;
+    background: rgba(13, 13, 13, 0.95);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    padding: 6px 6px 6px 12px;
+    gap: 15px;
+    transition: var(--transition);
+}
+
+.user-info-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-auth-pill .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-auth-pill .user-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    letter-spacing: 0.2px;
+}
+
+.logout-pill-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ff3333;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(255, 51, 51, 0.3);
+}
+
+.logout-pill-btn:hover {
+    background: #fff;
+    color: #000;
+    transform: scale(1.02);
+}
+
+.logout-pill-btn i {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .user-auth-pill {
+        padding: 4px 4px 4px 8px;
+        gap: 10px;
+        transform: scale(0.9);
+        transform-origin: right center;
+    }
+    .user-auth-pill .user-name { display: none; }
+    .user-auth-pill .user-avatar { width: 28px; height: 28px; }
+    .logout-pill-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    .logout-pill-btn span { display: none; }
+    .logout-pill-btn i { font-size: 1rem; }
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg-black); }

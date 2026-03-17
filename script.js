@@ -125,11 +125,16 @@ function updateAuthUI() {
             const user = JSON.parse(userStr);
             navBtns.innerHTML = `
                 <div class="nav-auth-container">
-                    <a href="dashboard" class="btn btn-outline dashboard-btn">Dashboard</a>
-                    <div class="user-pill">
-                        <img src="${user.avatar}" class="user-avatar" alt="Avatar">
-                        <span class="user-name">${user.name}</span>
-                        <a href="#" onclick="logout()" class="logout-icon"><i class="fas fa-sign-out-alt"></i></a>
+                    <a href="dashboard" class="btn btn-primary dashboard-btn" style="padding: 8px 20px; border-radius: 100px; font-weight: 700;">Dashboard</a>
+                    <div class="user-auth-pill">
+                        <div class="user-info-group">
+                            <img src="${user.avatar}" class="user-avatar" alt="Avatar">
+                            <span class="user-name">${user.name}</span>
+                        </div>
+                        <button onclick="logout()" class="logout-pill-btn">
+                            <i class="fas fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </button>
                     </div>
                 </div>
             `;

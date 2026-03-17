@@ -35,38 +35,7 @@
         </div>
     </nav>
 
-    <script>
-        function toggleMobileMenu() {
-            document.querySelector('.nav-links').classList.toggle('active');
-            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
-            const userFromUrl = urlParams.get('user_data') || hashParams.get('user_data');
-            
-            if (userFromUrl) {
-                try {
-                    const userData = JSON.parse(decodeURIComponent(userFromUrl));
-                    localStorage.setItem('agency_chat_user', JSON.stringify(userData));
-                    // Clean URL
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                } catch (e) {
-                    console.error('Error parsing user data:', e);
-                }
-            }
 
-            const post = urlParams.get('post') || hashParams.get('post');
-            if (post === 'dashboard') {
-                window.location.href = 'dashboard';
-            }
-            const postAfterInvite = localStorage.getItem('post_after_invite');
-            if (postAfterInvite === 'dashboard') {
-                localStorage.removeItem('post_after_invite');
-                window.location.href = 'dashboard';
-            }
-        });
-    </script>
 
     <main>
         <!-- Hero Section -->
@@ -179,5 +148,42 @@
 
     <script src="config.js"></script>
     <script src="script.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.mobile-menu-toggle').classList.toggle('active');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+            const userFromUrl = urlParams.get('user_data') || hashParams.get('user_data');
+            
+            if (userFromUrl) {
+                try {
+                    const userData = JSON.parse(decodeURIComponent(userFromUrl));
+                    localStorage.setItem('agency_chat_user', JSON.stringify(userData));
+                    // Clean URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (e) {
+                    console.error('Error parsing user data:', e);
+                }
+            }
+
+            const post = urlParams.get('post') || hashParams.get('post');
+            if (post === 'dashboard') {
+                window.location.href = 'dashboard';
+            }
+            const postAfterInvite = localStorage.getItem('post_after_invite');
+            if (postAfterInvite === 'dashboard') {
+                localStorage.removeItem('post_after_invite');
+                window.location.href = 'dashboard';
+            }
+
+            // Ensure Auth UI is updated after potentially setting user data from URL
+            if (typeof updateAuthUI === 'function') {
+                updateAuthUI();
+            }
+        });
+    </script>
 </body>
 </html>
