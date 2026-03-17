@@ -117,32 +117,13 @@ window.onclick = (event) => {
 let user = null;
 let pendingAvatarBase64 = null;
 let typingTimeout = null;
-let lastOnlineCount = 0;
-let isFakeConnected = false;
 
 // Update UI Status
-function updateStatusUI(status, count) {
+function updateStatusUI() {
     if (!userCountText) return;
     
-    // Initial fake connection delay
-    if (!isFakeConnected) {
-        userCountText.textContent = 'connecting..';
-        if (statusDot) statusDot.style.background = '#666'; // Gray while connecting
-        
-        setTimeout(() => {
-            isFakeConnected = true;
-            updateStatusUI(status, count);
-        }, 500);
-        return;
-    }
-
-    // After 0.5s, always show "Connected" regardless of the status
-    if (count !== undefined) {
-        lastOnlineCount = count;
-        userCountText.textContent = `Connected • ${count} online`;
-    } else {
-        userCountText.textContent = lastOnlineCount > 0 ? `Connected • ${lastOnlineCount} online` : 'Connected';
-    }
+    // Always show "Connected"
+    userCountText.textContent = 'Connected';
 
     // Always use green dot for the "Connected" look
     if (statusDot) {

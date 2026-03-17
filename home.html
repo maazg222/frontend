@@ -9,28 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="clean-urls.js" defer></script>
-    <style>
-        @media (max-width: 768px) {
-            #nav-auth-btns div[style*="display: flex"] {
-                gap: 8px !important;
-            }
-            #nav-auth-btns span {
-                display: none;
-            }
-            #nav-auth-btns div[style*="padding: 5px 12px"] {
-                padding: 5px 8px !important;
-            }
-            main section[style*="padding: 100px 0"] {
-                padding: 60px 0 !important;
-            }
-            section[style*="padding: 5rem"] {
-                padding: 3rem 1.5rem !important;
-            }
-            section h2[style*="font-size: 3rem"] {
-                font-size: 2rem !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="mesh-bg"></div>
@@ -47,7 +25,7 @@
                 <a href="community">Community</a>
             </div>
             <div class="nav-btns" id="nav-auth-btns">
-                <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord`" class="btn btn-primary">Login with Discord</a>
+                <a href="#" onclick="window.location.href = `${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord`" class="btn btn-primary login-btn">Login</a>
             </div>
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <span></span>
@@ -97,18 +75,18 @@
             if (userStr) {
                 const user = JSON.parse(userStr);
                 navBtns.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 15px;">
-                        <a href="dashboard" class="btn btn-outline" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">Dashboard</a>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 5px 12px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-                            <img src="${user.avatar}" style="width: 24px; height: 24px; border-radius: 50%;" alt="Avatar">
-                            <span style="font-weight: 600; font-size: 0.85rem;">${user.name}</span>
+                    <div class="nav-auth-container" style="display: flex; align-items: center; gap: 15px;">
+                        <a href="dashboard" class="btn btn-outline dashboard-btn">Dashboard</a>
+                        <div class="user-pill" style="display: flex; align-items: center; gap: 10px; padding: 5px 12px; background: rgba(255,255,255,0.05); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                            <img src="${user.avatar}" class="user-avatar" style="width: 24px; height: 24px; border-radius: 50%;" alt="Avatar">
+                            <span class="user-name" style="font-weight: 600; font-size: 0.85rem;">${user.name}</span>
                             <a href="#" onclick="logout()" style="color: var(--accent-red); margin-left: 5px; font-size: 0.8rem;"><i class="fas fa-sign-out-alt"></i></a>
                         </div>
                     </div>
                 `;
             } else {
                 navBtns.innerHTML = `
-                    <a href="#" onclick="window.location.href = \`\${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary">Login with Discord</a>
+                    <a href="#" onclick="window.location.href = \`\${FRONTEND_CONFIG.BACKEND_URL}/api/auth/discord?state=dashboard\`" class="btn btn-primary login-btn">Login</a>
                 `;
             }
         }
@@ -208,11 +186,11 @@
         </section>
 
         <!-- CTA Section -->
-        <section style="padding: 100px 0; text-align: center;">
-            <div class="container" style="background: linear-gradient(180deg, var(--bg-dark) 0%, transparent 100%); padding: 5rem; border-radius: 40px; border: 1px solid var(--glass-border);">
-                <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem;">Ready to upgrade your security?</h2>
-                <p style="color: var(--text-gray); margin-bottom: 3rem; font-size: 1.2rem;">Join thousands of communities that trust Agency Dev for their protection.</p>
-                <a href="bots.html" class="btn btn-primary" style="padding: 1.2rem 3.5rem; font-size: 1.1rem;">Get Started Now</a>
+        <section class="cta-section">
+            <div class="container cta-container">
+                <h2 class="cta-title">Ready to upgrade your security?</h2>
+                <p class="cta-text">Join thousands of communities that trust Agency Dev for their protection.</p>
+                <a href="bots.html" class="btn btn-primary cta-btn">Get Started Now</a>
             </div>
         </section>
     </main>
