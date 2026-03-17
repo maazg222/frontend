@@ -421,21 +421,78 @@ function checkLogin() {
 // Check for existing session
 checkLogin();
 
-// Background polling as a fallback for live messages (every 10 seconds)
+// Background polling for live messages (every 2.5 seconds)
 setInterval(async () => {
     try {
         const response = await fetch(`${FRONTEND_CONFIG.BACKEND_URL}/api/chat/messages`);
         if (response.ok) {
             const messages = await response.json();
-            // Only re-render if we have new messages to avoid flickering
-            const currentCount = chatMessages.querySelectorAll('.message').length;
-            if (messages.length > currentCount) {
-                renderMessages(messages);
+            
+            // Get all current message IDs in the UI
+            const currentMessageIds = new Set();
+            document.querySelectorAll('.message[data-message-id]').forEach(el => {
+                currentMessageIds.add(el.getAttribute('data-message-id'));
+            });
+
+            // Find messages that are in the new list but not in the UI
+            const newMessages = messages.filter(msg => msg.id && !currentMessageIds.has(msg.id));
+            
+            if (newMessages.length > 0) {
+                const currentLoggedUser = user || (localStorage.getItem('agency_chat_user') ? JSON.parse(localStorage.getItem('agency_chat_user')) : null);
+
+                // Handle optimistic updates: check if any of these "new" messages match a temporary one
+                const tempMsgs = document.querySelectorAll('.message[data-message-id^="temp-"]');
+                const messagesToAppend = [];
+
+                newMessages.forEach(msg => {
+                    let matchedTemp = false;
+                    tempMsgs.forEach(tempMsg => {
+                        const textElem = tempMsg.querySelector('.message-text');
+                        const userSpan = tempMsg.querySelector('.user-name');
+                        if (textElem && textElem.innerText === msg.text && 
+                            userSpan && userSpan.getAttribute('data-user-id') === msg.userId) {
+                            // This is our optimistic message! Update its ID and timestamp instead of appending
+                            tempMsg.setAttribute('data-message-id', msg.id);
+                            const timeElem = tempMsg.querySelector('.time-text');
+                            if (timeElem && msg.timestamp) {
+                                timeElem.innerText = new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                            }
+                            matchedTemp = true;
+                        }
+                    });
+                    if (!matchedTemp) {
+                        messagesToAppend.push(msg);
+                    }
+                });
+
+                if (messagesToAppend.length > 0) {
+                    // If there are many new messages (like a full reload), just re-render
+                    if (messagesToAppend.length > 10 || currentMessageIds.size === 0) {
+                        renderMessages(messages);
+                    } else {
+                        // Otherwise, just append the new ones
+                        messagesToAppend.forEach(msg => {
+                            appendMessage(msg, currentLoggedUser && msg.userId === currentLoggedUser.id);
+                        });
+                        scrollToBottom();
+                    }
+                }
                 updateStatusUI('connected');
             }
+
+            // Check if any messages were deleted from the server
+            const serverMessageIds = new Set(messages.map(msg => msg.id));
+            currentMessageIds.forEach(id => {
+                if (!serverMessageIds.has(id) && !id.startsWith('temp-')) {
+                    const el = document.querySelector(`.message[data-message-id="${id}"]`);
+                    if (el) el.remove();
+                }
+            });
         }
-    } catch (e) {}
-}, 10000);
+    } catch (e) {
+        console.error('Polling error:', e);
+    }
+}, 2500);
 
 async function refreshUserProfile(id) {
     try {
