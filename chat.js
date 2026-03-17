@@ -118,12 +118,25 @@ let user = null;
 let pendingAvatarBase64 = null;
 let typingTimeout = null;
 let lastOnlineCount = 0;
+let isFakeConnected = false;
 
 // Update UI Status
 function updateStatusUI(status, count) {
     if (!userCountText) return;
     
-    // Always show "Connected" regardless of the status
+    // Initial fake connection delay
+    if (!isFakeConnected) {
+        userCountText.textContent = 'connecting..';
+        if (statusDot) statusDot.style.background = '#f10000ff'; // Gray
+        
+        setTimeout(() => {
+            isFakeConnected = true;
+            updateStatusUI(status, count);
+        }, 500);
+        return;
+    }
+
+    // After 0.5s, always show "Connected" regardless of the status
     if (count !== undefined) {
         lastOnlineCount = count;
         userCountText.textContent = `Connected • ${count} online`;
@@ -414,6 +427,9 @@ function checkLogin() {
 
 // Check for existing session
 checkLogin();
+
+// Initial fake status update
+updateStatusUI();
 
 // Background polling for live messages (every 2.5 seconds)
 setInterval(async () => {
