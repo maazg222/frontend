@@ -150,10 +150,20 @@ body {
 }
 
 @media (max-width: 480px) {
-    .user-auth-pill .user-name { display: none; }
-    .logout-pill-btn span { display: none; }
-    .user-auth-pill { padding: 4px; gap: 6px; }
-    .logout-pill-btn { padding: 6px 10px; }
+    .user-auth-pill {
+        padding: 4px 10px;
+        gap: 8px;
+    }
+    .user-auth-pill .user-name {
+        font-size: 0.75rem;
+    }
+    .logout-pill-btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+    .logout-pill-btn span {
+        display: inline;
+    }
 }
 
 /* Scrollbar */
